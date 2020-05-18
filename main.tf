@@ -1,42 +1,54 @@
-provider "aws" {
-    region = "${var.region}"
+data "aws_region" "selected" {}
 
-}
-resource "aws_instance" "web" {
-  ami           = "${var.ami}"
-  instance_type = "${var.type}"
+data "aws_availability_zones" "available" {}
 
-  ipv4_addresses = "${var.ips}"
-}
-resource "aws_security_group" "allow_traffic" {
-  name = "allow_traffic"
-  ingress {
-    from_port = 80
-    to_port = 80
-    protocol = "tcp"
-    ipv4_addresses = "${var.ips}"  
-  }
-  ingress {
-    from_port = 443
-    to_port = 443
-    protocol = "tcp"
-    ipv4_addresses = "${var.ips}"
+data "aws_ami" "ubuntu_1804" {
+  most_recent = true
+  owners      = ["099720109477"]
+
+  filter {
+    name   = "name"
+    values = ["ubuntu-minimal/images/*/ubuntu-bionic-18.04-*"]
   }
 
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
   }
 
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
   }
 }
-output "web_public_dns" {
-  value = "${aws_instance.web.public_dns}"
+
+data "aws_ami" "amazon_linux2" {
+  most_recent = true
+  owners = ["137112412989"] # Amazon
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
 }
