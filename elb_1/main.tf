@@ -1,8 +1,8 @@
-terraform {
-  source = "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git?ref=v2.3.0"
-}
+module "elb_http"  {
+  source  = "terraform-aws-modules/elb/aws"
+  version = "~> 2.3"
 
-inputs = {
+  #source = "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git?ref=v2.3.0"
   # A health check block
   # type: map(string)
   health_check = {"healthy_threshold": 2, 
@@ -27,3 +27,4 @@ inputs = {
   # A list of subnet IDs to attach to the ELB
   # type: list(string)
   subnets = []
+}

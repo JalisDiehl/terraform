@@ -1,21 +1,6 @@
-terraform {
-  source = "git::git@github.com:terraform-aws-modules/terraform-aws-autoscaling.git?ref=v3.4.0"
-}
-
-include {
-  path = find_in_parent_folders()
-}
-
-dependencies {
-  paths = ["../aws-data"]
-}
-
-dependency "aws-data" {
-  config_path = "../aws-data"
-}
-
-
-inputs = {
+module "asg" {
+  source  = "terraform-aws-modules/autoscaling/aws"
+  version = "~> 3.4" 
   # The number of Amazon EC2 instances that should be running in the group
   # type: string
   desired_capacity = "1"
@@ -34,7 +19,7 @@ inputs = {
 
   # The maximum size of the auto scale group
   # type: string
-  max_size = "1"
+  max_size = "4"
 
   # The minimum size of the auto scale group
   # type: string
