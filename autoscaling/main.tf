@@ -1,16 +1,3 @@
-data "aws_ami" "amazon_linux" {
-  most_recent = true
-  owners      = ["137112412989"] # Amazon
-
-  filter {
-    name = "name"
-
-    values = [
-      "amzn-ami-hvm-*-x86_64-gp2",
-    ]
-  }
-}
-
 module "asg" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "~> 3.4" 
@@ -24,7 +11,7 @@ module "asg" {
 
   # The EC2 image ID to launch
   # type: string
-  image_id = data.aws_ami.amazon_linux.id
+  image_id = module.datinha.data.aws_ami.amazon_linux.id
 
   # The size of instance to launch
   # type: string
@@ -44,11 +31,11 @@ module "asg" {
 
   # A list of security group IDs to assign to the launch configuration
   # type: list(string)
-  security_groups = []
+  security_groups = [module.datinha.data.aws_security_group.default.id]
 
   # A list of subnet IDs to launch resources in
   # type: list(string)
-  vpc_zone_identifier = []
+  vpc_zone_identifier = module.datinha.data.aws_subnet_ids.all.ids
 
   
 }

@@ -10,3 +10,7 @@ module "autoscaling" {
 module "elb" {
   source = "./elb_1"
 }
+
+module "datinha"{
+  source = "./datinha"
+}
