@@ -1,3 +1,16 @@
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["137112412989"] # Amazon
+
+  filter {
+    name = "name"
+
+    values = [
+      "amzn-ami-hvm-*-x86_64-gp2",
+    ]
+  }
+}
+
 module "asg" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "~> 3.4" 
@@ -11,7 +24,7 @@ module "asg" {
 
   # The EC2 image ID to launch
   # type: string
-  image_id = module.aws-data.amazon_linux2_aws_ami_id
+  image_id = data.aws_ami.amazon_linux.id
 
   # The size of instance to launch
   # type: string
