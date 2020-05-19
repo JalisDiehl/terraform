@@ -22,13 +22,3 @@ output "ubuntu_1804_aws_ami_id" {
   description = "AMI ID of Ubuntu 18.04"
   value       = data.aws_ami.ubuntu_1804.id
 }
-
-output "instance_ips" {
-  description = "Public ip"
-  value = ["${aws_instance.web.*.public_ip}"]
-}
-
-output "lb_address" {
-  description = "Public DNS"
-  value = "${aws_alb.web.public_dns}"
-}

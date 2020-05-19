@@ -1,0 +1,1 @@
+#tentei fazer o retorno do dns do lb mas sem sucesso
