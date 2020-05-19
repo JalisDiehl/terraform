@@ -1,6 +1,6 @@
 # terraform
 
-Small terraform to create one machine in AWS with port 80 and 443 open to web
+Small terraform to create one machine in AWS with port 80 with web-tier and autoscaling
 
 Backend of terraform is in S3 some bucket 
 
