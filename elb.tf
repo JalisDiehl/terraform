@@ -22,9 +22,9 @@ module "elb_http"  {
 
   # A list of security group IDs to assign to the ELB
   # type: list(string)
-  security_groups = [module.datinha.data.aws_security_group.default.id]
+  security_groups = [data.aws_security_group.default.id]
 
   # A list of subnet IDs to attach to the ELB
   # type: list(string)
-  subnets = module.datinha.data.aws_subnet_ids.all.ids
+  subnets = data.aws_subnet_ids.all.ids
 }
