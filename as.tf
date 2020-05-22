@@ -1,6 +1,6 @@
 module "asg" {
   source  = "terraform-aws-modules/autoscaling/aws"
-  version = "~> 3.4" 
+  version = "~> 3.4"
   # The number of Amazon EC2 instances that should be running in the group
   # type: string
   desired_capacity = "1"
@@ -11,7 +11,7 @@ module "asg" {
 
   # The EC2 image ID to launch
   # type: string
-  image_id = module.datinha.data.aws_ami.amazon_linux.id
+  image_id = data.aws_ami.amazon_linux.id
 
   # The size of instance to launch
   # type: string
@@ -31,11 +31,11 @@ module "asg" {
 
   # A list of security group IDs to assign to the launch configuration
   # type: list(string)
-  security_groups = [module.datinha.data.aws_security_group.default.id]
+  security_groups = [data.aws_security_group.default.id]
 
   # A list of subnet IDs to launch resources in
   # type: list(string)
-  vpc_zone_identifier = module.datinha.data.aws_subnet_ids.all.ids
+  vpc_zone_identifier = data.aws_subnet_ids.all.ids
 
-  
+
 }
